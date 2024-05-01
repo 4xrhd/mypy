@@ -59,14 +59,20 @@ def removeInventory():
     print("Removing Inventory")
     print("==================")
     item_description = input("Enter the item name to remove from inventory: ")
-    cell = sheet.find(item_description)
-    sheet.delete_row(cell.row)
-    
+    try:
+        cell = sheet.find(item_description)
+        sheet.delete_rows(cell.row)
+        print(f"{item_description} removed from inventory.")
+    except gspread.exceptions.CellNotFound:
+        print(f"Item '{item_description}' not found in inventory.")
+
     CHOICE = int(input('Enter 98 to continue or 99 to exit: '))
     if CHOICE == 98:
         menuDisplay()
     else:
         exit()
+
+
 
 def updateInventory():
     print("Updating Inventory")
@@ -79,6 +85,7 @@ def updateInventory():
     new_quantity = old_quantity + item_quantity
 
     sheet.update_cell(cell.row, cell.col + 1, new_quantity)
+    printInventory()
                                             
     CHOICE = int(input('Enter 98 to continue or 99 to exit: '))
     if CHOICE == 98:
@@ -90,17 +97,21 @@ def searchInventory():
     print('Searching Inventory')
     print('===================')
     item_description = input('Enter the name of the item: ')
-    
-    cell = sheet.find(item_description)
-    print('Item:     ', sheet.cell(cell.row, cell.col).value)
-    print('Quantity: ', sheet.cell(cell.row, cell.col + 1).value)
-    print('----------')
-        
+
+    try:
+        cell = sheet.find(item_description)
+        print('Item:     ', sheet.cell(cell.row, cell.col).value)
+        print('Quantity: ', sheet.cell(cell.row, cell.col + 1).value)
+        print('----------')
+    except gspread.exceptions.CellNotFound:
+        print(f"Item '{item_description}' not found in inventory.")
+
     CHOICE = int(input('Enter 98 to continue or 99 to exit: '))
     if CHOICE == 98:
         menuDisplay()
     else:
         exit()
+
         
 def printInventory():
     print('Current Inventory')
