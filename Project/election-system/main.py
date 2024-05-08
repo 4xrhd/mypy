@@ -1,7 +1,7 @@
 import gspread
 from tabulate import tabulate
 from oauth2client.service_account import ServiceAccountCredentials
-from gspread_formatting import *
+
 
 
 # Set up Google Sheets credentials
@@ -13,21 +13,14 @@ client = gspread.authorize(credentials)
 # Open the Google Sheet
 sheet = client.open('Election').sheet1
 
-## giving cell color arekta soytani :') 
-from gspread_formatting import *
-
+### create header if not exist
 def create_headers():
     # Check if headers already exist
     headers = sheet.row_values(1)
-    if "Candidates" not in headers:
-        sheet.update_cell(1, 1, "Candidates")
-        format_cell_range(sheet, f'A1:A1', {'textFormat': {'bold': True, 'foregroundColor': {'red': 1.0, 'green': 1.0, 'blue': 1.0}}})
-        format_cell_range(sheet, f'A1:A1', {'backgroundColor': {'red': 0.0, 'green': 0.0, 'blue': 0.0}})
+    if "Candidate" not in headers:
+        sheet.update_cell(1, 1, "Candidate")
     if "Votes" not in headers:
         sheet.update_cell(1, 2, "Votes")
-        format_cell_range(sheet, f'B1:B1', {'textFormat': {'bold': True, 'foregroundColor': {'red': 1.0, 'green': 1.0, 'blue': 1.0}}})
-        format_cell_range(sheet, f'B1:B1', {'backgroundColor': {'red': 0.0, 'green': 0.0, 'blue': 0.0}})
-
 
 def display_menu():
     print("""
@@ -59,9 +52,10 @@ def give_vote():
 def candidates_list():
     candidates = sheet.col_values(1)[1:]  # Get candidate names from the first column, skipping the header
     print("Candidates:")
-    for candidate in candidates:
-        print(candidate)
+    for i, candidate in enumerate(candidates, 1):
+        print(f"{i}. {candidate}")
     return True
+
 
 def add_candidate():
     candidate_name = input("Enter the name of the candidate you want to add: ")
