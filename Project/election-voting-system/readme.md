@@ -22,19 +22,19 @@ This project is a command-line application developed in Python for managing elec
 
 ### Adding a Candidate
 
-<img src="screenshots/add_candidate.png" alt="Adding a Candidate" width="600">
+<img src="screenshots/adding_candidates.png" alt="Adding a Candidate" width="600">
 
 ### Removing a Candidate
 
-<img src="screenshots/remove_candidate.png" alt="Removing a Candidate" width="600">
+<img src="screenshots/remove-candidates.png" alt="Removing a Candidate" width="600">
 
 ### Viewing Candidates
 
-<img src="screenshots/view_candidates.png" alt="Viewing Candidates" width="600">
+<img src="screenshots/view-candidates.png" alt="Viewing Candidates" width="600">
 
 ### Voting Process
 
-<img src="screenshots/voting_process.png" alt="Voting Process" width="600">
+<img src="screenshots/give-vote.png" alt="Voting Process" width="600">
 
 ## Installation
 
