@@ -22,7 +22,7 @@ This project is a command-line application developed in Python for managing elec
 
 ### Adding a Candidate
 
-<img src="screenshots/adding_candidates.png" alt="Adding a Candidate" width="600">
+<img src="screenshots/adding-candidates.png" alt="Adding a Candidate" width="600">
 
 ### Removing a Candidate
 
