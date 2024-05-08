@@ -1,5 +1,8 @@
 import gspread
+from tabulate import tabulate
 from oauth2client.service_account import ServiceAccountCredentials
+from gspread_formatting import *
+
 
 # Set up Google Sheets credentials
 scope = ['https://spreadsheets.google.com/feeds',
@@ -10,13 +13,21 @@ client = gspread.authorize(credentials)
 # Open the Google Sheet
 sheet = client.open('Election').sheet1
 
+## giving cell color arekta soytani :') 
+from gspread_formatting import *
+
 def create_headers():
     # Check if headers already exist
     headers = sheet.row_values(1)
-    if "Candidate" not in headers:
-        sheet.update_cell(1, 1, "Candidate")
+    if "Candidates" not in headers:
+        sheet.update_cell(1, 1, "Candidates")
+        format_cell_range(sheet, f'A1:A1', {'textFormat': {'bold': True, 'foregroundColor': {'red': 1.0, 'green': 1.0, 'blue': 1.0}}})
+        format_cell_range(sheet, f'A1:A1', {'backgroundColor': {'red': 0.0, 'green': 0.0, 'blue': 0.0}})
     if "Votes" not in headers:
         sheet.update_cell(1, 2, "Votes")
+        format_cell_range(sheet, f'B1:B1', {'textFormat': {'bold': True, 'foregroundColor': {'red': 1.0, 'green': 1.0, 'blue': 1.0}}})
+        format_cell_range(sheet, f'B1:B1', {'backgroundColor': {'red': 0.0, 'green': 0.0, 'blue': 0.0}})
+
 
 def display_menu():
     print("""
@@ -71,11 +82,14 @@ def remove_candidate():
 
 def election_result():
     candidates = sheet.col_values(1)[1:]  # Get candidate names from the first column, skipping the header
-    print("Election Result:")
+    result_table = []
     for candidate in candidates:
         cell = sheet.find(candidate)
         votes = int(sheet.cell(cell.row, 2).value)
-        print(f"{candidate}: {votes} votes")
+        result_table.append([candidate, votes])
+
+    print("Election Result:")
+    print(tabulate(result_table, headers=['Candidates', 'Votes'], tablefmt='grid'))
     return True
 
 # Main function
