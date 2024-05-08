@@ -24,6 +24,7 @@ def create_headers():
 
 def display_menu():
     print("""
+
     Welcome to the voting system (choice 1-5):
 
     1. Give vote
@@ -32,6 +33,8 @@ def display_menu():
     4. Remove Candidate
     5. Election result
     6. Exit
+
+
     """)
 
 def give_vote():
@@ -44,9 +47,9 @@ def give_vote():
     if 1 <= choice <= len(candidates):
         cell = sheet.find(candidates[choice-1])
         sheet.update_cell(cell.row, 2, int(sheet.cell(cell.row, 2).value) + 1)
-        print("Vote successfully casted.")
+        print("\n Vote successfully casted.")
     else:
-        print("Invalid choice.")
+        print("\n Invalid choice.")
     return True
 
 def candidates_list():
@@ -59,9 +62,16 @@ def candidates_list():
 
 def add_candidate():
     candidate_name = input("Enter the name of the candidate you want to add: ")
-    sheet.append_row([candidate_name, 0])
-    print("Candidate added successfully.")
+    
+    # Check if the candidate already exists
+    candidates = sheet.col_values(1)[1:]  # Get candidate names from the first column, skipping the header
+    if candidate_name in candidates:
+        print("\n Candidate already exists.")
+    else:
+        sheet.append_row([candidate_name, 0])
+        print("\n Candidate added successfully.")
     return True
+
 
 def remove_candidate():
     candidate_name = input("Enter the name of the candidate you want to remove: ")
