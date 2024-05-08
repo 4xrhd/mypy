@@ -1,4 +1,3 @@
 gspread
 ServiceAccountCredentials
 oauth2client
-gspread_formatting
