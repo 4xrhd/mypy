@@ -78,6 +78,7 @@ def give_vote():
     return True
 
 
+
 def candidates_list():
     candidates = candidates_sheet.col_values(1)[1:]  # Get candidate names from the first column, skipping the header
     print("Candidates:")
@@ -100,16 +101,26 @@ def add_candidate():
 
 
 def remove_candidate():
-    candidate_name = input("Enter the name of the candidate you want to remove: ")
+
     candidates = candidates_sheet.col_values(1)[1:]  # Get candidate names from the first column, skipping the header
-    if candidate_name in candidates:
-        cell = candidates_sheet.find(candidate_name)
-        candidates_sheet.delete_rows(cell.row)  # Corrected line
-        print("Candidate removed successfully.")
-        
-    else:
-        print("Candidate not found.")
+    print("List of candidates:")
+    for i, candidate in enumerate(candidates, 1):
+        print(f"{i}. {candidate}")
+    
+    try:
+        candidate_number = int(input("Enter the number of the candidate you want to remove: "))
+        if 1 <= candidate_number <= len(candidates):
+            candidate_name = candidates[candidate_number - 1]
+            cell = candidates_sheet.find(candidate_name)
+            candidates_sheet.delete_rows(cell.row)
+            print("Candidate removed successfully.")
+        else:
+            print("Invalid candidate number.")
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+    
     return True
+
 
 def election_result():
     candidates = candidates_sheet.col_values(1)[1:]  # Get candidate names from the first column, skipping the header
