@@ -10,6 +10,14 @@ client = gspread.authorize(credentials)
 # Open the Google Sheet
 sheet = client.open('Election').sheet1
 
+def create_headers():
+    # Check if headers already exist
+    headers = sheet.row_values(1)
+    if "Candidate" not in headers:
+        sheet.update_cell(1, 1, "Candidate")
+    if "Votes" not in headers:
+        sheet.update_cell(1, 2, "Votes")
+
 def display_menu():
     print("""
     Welcome to the voting system (choice 1-5):
@@ -19,6 +27,7 @@ def display_menu():
     3. Add Candidate
     4. Remove Candidate
     5. Election result
+    6. Exit
     """)
 
 def give_vote():
@@ -34,17 +43,20 @@ def give_vote():
         print("Vote successfully casted.")
     else:
         print("Invalid choice.")
+    return True
 
 def candidates_list():
     candidates = sheet.col_values(1)[1:]  # Get candidate names from the first column, skipping the header
     print("Candidates:")
     for candidate in candidates:
         print(candidate)
+    return True
 
 def add_candidate():
     candidate_name = input("Enter the name of the candidate you want to add: ")
     sheet.append_row([candidate_name, 0])
     print("Candidate added successfully.")
+    return True
 
 def remove_candidate():
     candidate_name = input("Enter the name of the candidate you want to remove: ")
@@ -55,6 +67,7 @@ def remove_candidate():
         print("Candidate removed successfully.")
     else:
         print("Candidate not found.")
+    return True
 
 def election_result():
     candidates = sheet.col_values(1)[1:]  # Get candidate names from the first column, skipping the header
@@ -63,12 +76,14 @@ def election_result():
         cell = sheet.find(candidate)
         votes = int(sheet.cell(cell.row, 2).value)
         print(f"{candidate}: {votes} votes")
+    return True
 
 # Main function
 def main():
+    create_headers()  # Create headers if they don't exist
     while True:
         display_menu()
-        choice = input("Enter your choice (1-5): ")
+        choice = input("Enter your choice (1-6): ")
         if choice == '1':
             give_vote()
         elif choice == '2':
@@ -79,9 +94,15 @@ def main():
             remove_candidate()
         elif choice == '5':
             election_result()
+        elif choice == '6':
+            break  # Exit the loop
         else:
-            print("Invalid choice. Please enter a number between 1 and 5.")
+            print("Invalid choice. Please enter a number between 1 and 6.")
+        
+        # Prompt for Enter to continue or F to exit
+        choice = input("Press Enter to continue or 'F' to exit: ")
+        if choice.upper() == 'F':
+            break
 
 if __name__ == "__main__":
     main()
-
