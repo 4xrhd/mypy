@@ -61,6 +61,13 @@ def give_vote():
         candidates_sheet.update_cell(cell.row, 2, int(candidates_sheet.cell(cell.row, 2).value) + 1)
         voter_name = input("Enter your name: ")
         voter_id = input("Enter your ID: ")
+        
+        # Check if voter ID already exists in Voters Data sheet
+        voter_ids = voters_sheet.col_values(2)[1:]  # Get IDs from the second column, skipping the header
+        if voter_id in voter_ids:
+            print("You have already cast your vote.")
+            return True
+
         # Get the name of the candidate the voter voted for
         voted_candidate = candidates[choice - 1]
         # Append the voter's name, ID, and the candidate they voted for to the Voter Data sheet
