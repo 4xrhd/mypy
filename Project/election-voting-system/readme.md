@@ -10,9 +10,10 @@ This project is a command-line application developed in Python for managing elec
 
 - Add new candidates
 - Remove candidates
-- View list of candidates
+- View the list of candidates
 - Conduct voting
 - View voting results
+- View voters' info
 
 ## Screenshots
 
@@ -40,19 +41,16 @@ This project is a command-line application developed in Python for managing elec
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/4xrhd/mypy/
-    
+   git clone https://github.com/4xrhd/election-voting-system/
     ```
 2. Navigate to the project directory:
 
     ```bash
-    cd mypy/project/election-voting-system/
-
+    cd election-voting-system/
     ```
 3. Install dependencies:
     ```bash
-
-    pip install -r requirements.txt
+    pip install -r requirements.txt --break-system-packages
     ```
 ## Usage
 1. Run the program:
@@ -61,6 +59,11 @@ This project is a command-line application developed in Python for managing elec
     python main.py
     ```
 2. Follow the on-screen instructions to navigate through the options and conduct the election process.
+
+## result here(access the spreadsheet)
+<a href="https://docs.google.com/spreadsheets/d/1569kCgYrLoM3Tn1VWPy2tLOEsA6vJ4HStdNkLR3W4us/"> show result</a>
+
+
 
 ## Credits
 This project was created by [the interviewee infront of you].
